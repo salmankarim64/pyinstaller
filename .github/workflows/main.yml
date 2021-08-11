@@ -1,0 +1,46 @@
+ 
+name: Build for PyInstaller
+
+on: [push]
+
+jobs:
+  Windows: 
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller
+    - name: build 
+      run:
+       pyinstaller file --version-file version_info.txt
+
+    - name: Display structure of downloaded files
+      run: ls -R
+      
+    
+
+    - name: create empty directory
+      run: |
+          mkdir empty.d
+          echo > empty.d/.empty
+    - name: empty dist archive
+      uses: actions/upload-artifact@v1
+      with:
+        name: dist
+        path: empty.d
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Window's Image Processo
+        path: dist
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: Window's Image Processo
