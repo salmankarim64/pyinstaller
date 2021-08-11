@@ -19,7 +19,7 @@ jobs:
         pip install pyinstaller
     - name: build 
       run:
-       pyinstaller file --version-file version_info.txt
+       pyinstaller file.py --version-file version_info.txt
 
     - name: Display structure of downloaded files
       run: ls -R
